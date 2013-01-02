@@ -1,0 +1,12 @@
+
+Install instructions (Asterisk 1.8):
+
+1. Put files in web accessible folder
+2. Configure variables extensions-realtime.php configuration values at start of file (database access and AMI credentials).
+3. If you use FreePBX 2.10 or newer, install FOP framework module manually, in other case no duttons description files generated
+4. In case yo do not use FreePBX (this type of installation possible but does not supported):
+   - generate FOP files by yourself
+   - you should care about Asterisk database keys AMPUSER and CURCALL
+   - some variables taken from /etc/amportal.conf
+
+NOTE: Panel assume taht all outbound calls made in [from-internal context and for now this context name hardcoded in many places.

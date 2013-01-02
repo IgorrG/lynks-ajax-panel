@@ -1,0 +1,365 @@
+<script type="text/javascript" src="lib/jquery.js"></script>
+
+ <style type="text/css">
+
+div.reg0{ 
+  background: url(images/bg.png) bottom right no-repeat; 
+  font-family:Verdana,Arial;
+  color: black;
+  font-weight:bold;
+  font-size: 8px;
+  display: block; 
+  width: 190;
+  height: 26;
+  padding: 2px; 
+  float: left;
+}
+div.reg0:hover{ 
+  background: url(images/bg_sel.png) bottom right no-repeat; 
+  display: block; 
+  width: 190;
+  height: 26;
+  padding: 2px; 
+  font-family:Verdana,Arial;
+  color: black;
+  font-size: 8px;
+  float: left;
+}
+div.reg4{ 
+  background: url(images/bg_dis.png) bottom right no-repeat; 
+  font-family:Verdana,Arial;
+  color: black;
+  font-weight:bold;
+  font-size: 8px;
+  display: block; 
+  width: 190;
+  height: 26;
+  padding: 2px; 
+  float: left;
+}
+div.sel{ 
+  background: url(images/bg_bor.png) bottom right no-repeat; 
+  font-family:Verdana,Arial;
+  color: black;
+  font-weight:bold;
+  font-size: 8px;
+  display: block; 
+  width: 190;
+  height: 26;
+  padding: 2px; 
+  float: left;
+}
+div.sel:hover{ 
+  background: url(images/bg_bor_sel.png) bottom right no-repeat; 
+  display: block; 
+  width: 190;
+  height: 26;
+  padding: 2px; 
+  font-family:Verdana,Arial;
+  color: black;
+  font-size: 8px;
+  float: left;
+}
+
+/*-1 = Extension not found 
+0 = Idle 
+1 = In Use 
+2 = Busy 
+4 = Unavailable 
+8 = Ringing 
+16 = On Hold */
+
+.stat-1 {
+  background: url(images/lamp_grey.png) no-repeat;
+  background-position: center;
+  display: block; 
+  float: left;
+  height: 29;
+  width: 32;  }
+.stat0 {
+  background: url(images/lamp_lblue.png) no-repeat;
+  background-position: center;
+  display: block; 
+  float: left;
+  height: 29;
+  width: 32;   }
+.stat1 {
+  background: url(images/lamp_green.png) no-repeat;
+  background-position: center;
+  display: block; 
+  float: left;
+  height: 29;
+  width:32;
+  }
+.stat2 {
+  background: url(images/lamp_red.png) no-repeat;
+  background-position: center;
+  display: block; 
+  float: left;
+  height: 29;
+  width: 32;   }
+.stat4 {
+  background: url(images/lamp_dgrey.png) no-repeat;
+  background-position: center;
+  display: block; 
+  float: left;
+  height: 29;
+  width: 32;    }
+.stat8 {
+  background: url(images/lamp_red.png) no-repeat;
+  background-position: center;
+  display: block; 
+  float: left;
+  height: 29;
+  width: 32;   }
+.stat16 {
+  background: url(images/lamp_violet.png) no-repeat;
+  background-position: center;
+  display: block; 
+  float: left;
+  height: 29;
+  width: 32;    }
+
+div.usernum{ 
+  font-family:Arial;
+  color: black;
+  font-size: 11px;
+  font-weight:bold;
+    
+  float: left;
+  overflow: hidden;
+  position:relative;
+}
+div.username{ 
+  font-family:Arial;
+  color: black;
+  font-size: 11px;
+  font-weight:bold;
+
+  overflow: hidden;
+  position:relative;
+}
+div.stats{ 
+  font-family:Arial;
+  color: black;
+  font-size: 10px;
+  font-weight:normal;
+
+  overflow: hidden;
+  position:relative;
+  float: left;
+}
+div.time{ 
+  font-family:Arial;
+  color: red;
+  font-size: 10px;
+  font-weight:bold;
+  display: inline;
+  float: right;
+  text-align:right;
+  position:relative;
+}
+div.extlist{ 
+  display: block;
+  background-color: #F5F5F5;  
+  width: 100%;
+  float: left;
+}
+div.extlistfull{ 
+  display: none;
+}
+
+div.elems{ 
+  display: block;
+  background-color: #F5F5F5;  
+  border: 1px dotted red;
+  padding: 2px; 
+  float: left;
+}
+.button{ 
+  background-color: #DDDDDD;  
+  border: 2px outset blue;
+  padding: 2px; 
+  cursor: pointer;
+}
+.button:hover,
+.button:focus,
+.button:active 
+.button{ 
+  background-color: #EEEEEE;  
+  border: 2px inset red;
+  padding: 2px; 
+}
+</style>
+<BODY onload='init_timers()' >
+
+    <script type="text/javascript"> 
+    function init_timers()
+    {
+        //needle='';
+        //sorting='';
+        Hide_extensions();
+        listExten('','num');
+    }
+    ExtenList.BlinkTimer=200;
+    ExtenList.ChannelsTimer=3000;
+    ExtenList.StatusTimer=30000;
+    ExtenList.Filter='';
+    ExtenList.SortField='num';
+    ExtenList.Data=null;
+    ExtenList.ContClass='div.extlistfull';
+    
+    function  ExtenList.Show()
+    {
+        $(this.ContClass).css('display', 'block');
+        blink_timer = setInterval('this.LampOn()',this.BlinkTimer);
+        channels_timer = setInterval("this.ChannelsQuery()",this.ChannelsTimer);
+        Status_timer = setInterval("this.StatusQuery()",this.StatusTimer);
+        this.listExten();
+        data = null;
+    }
+    function  ExtenList.Hide()
+    {
+        $(this.ContClass).css('display', 'none');
+        clearInterval(blink_timer);
+        clearInterval(channels_timer);
+        clearInterval(Status_timer);
+    }
+    
+        $.fn.removeWithoutLeaking = function() {
+            this.each(function(i,e){
+                if( e.parentNode )
+                    e.parentNode.removeChild(e);
+            });
+        };
+  
+        
+        function  ExtenList.LampOn()
+        {
+            $('.stat8').css('backgroundImage', 'url(images/lamp_red.png)');
+            on = setTimeout("LampOff()", 100);
+        }
+        function  ExtenList.LampOff()
+        {
+            $('.stat8').css('backgroundImage', 'url(images/lamp_lblue.png)');
+            //off = setTimeout("LampOn()", 1000);
+            on = null;
+        }
+        
+        var j=0;
+        //var lastobj=array();
+        //периодический запрос текущих каналов
+        function ExtenList.ChannelsQuery()
+        {
+            $.getJSON("extensions-realtime.php?query=channels",
+                function(obj)
+                { 
+                    var j=0;
+                    j++;  //каждая итерация добавляет класс к используемому элементу с уникальным номером
+                    jQuery.each(obj, function(i, val) 
+                    {
+                        $("div#exten_"+i+" div#Status div").replaceWith("<div class=\"value"+j+' stat'+val["Status"]+"\"> </div>");
+                        $("div#exten_"+i+" div#Connected div").replaceWith("<div class=\"value"+j+"\">"+val["Connected"]+"</div>");
+                        $("div#exten_"+i+" div#CallerID div").replaceWith("<div class=\"value"+j+"\">"+val["CallerID"]+"</div>");
+                        $("div#exten_"+i+" div#Duration div").replaceWith("<div class=\"value"+j+"\">"+val["Duration"]+"</div>");
+                    });
+                        //все дивы с номерами предыдущей итерации возвращаем на прежнее место
+                        $(".value" + (j-1) ).replaceWith("<div class=\"value"+j+"\">&nbsp;</div>");
+                        this.data=obj;
+                });
+        };   
+        //периодический запрос текущего состояния экстеншенов
+        function ExtenList.StatusQuery()
+        {
+            $.getJSON("extensions-realtime.php?query=extstate",
+                function(obj)
+                { 
+                    jQuery.each(obj, function(i, val) 
+                    {
+                        if(val["Status"]==4)
+                        {
+                            $("div#exten_"+i+" div#Status").removeClass("stat0");
+                            $("div#exten_"+i+" div#Status").addClass("stat4");
+                            $("div#exten_"+i+".reg0").addClass('reg4');
+                            $("div#exten_"+i+".reg0").removeClass('reg0');
+                        }
+                        else if(val["Status"]==0)
+                        {
+                            $("div#exten_"+i+" div#Status").removeClass("stat4");
+                            $("div#exten_"+i+" div#Status").addClass("stat0");
+                            $("div#exten_"+i+".reg4").addClass('reg0');
+                            $("div#exten_"+i+".reg4").removeClass('reg4');
+                        }
+                    });
+                });
+        };
+        function listExten(needle1,sorting1)
+        {
+            sorting=sorting1;
+            needle=needle1;
+            $.getJSON("extensions-realtime.php?query=extensions&needle="+needle+"&sorting="+sorting+"",
+                function(obj)
+                { 
+                    content='';
+                    jQuery.each(obj, function(i, val) 
+                    {
+                        
+                        content=content+'' 
+                               +'<div class="ext_buttons reg0" id="exten_'+val["cidnum"]+'">\n'
+                               +'        <div class="stat0" id="Status"><div>&nbsp;</div></div>\n'
+                               +'        <div class=usernum>'+val["cidnum"]+'</div>\n'
+                               +'        <div class=usernum>:</div>\n'
+                               +'        <div class=username>'+val["cidname"]+'</div>\n'
+                               +'        <div class=stats id="Connected"><div>&nbsp;</div></div>\n'
+                               +'        <div class=stats>:</div>\n'
+                               +'        <div class=stats id="CallerID"><div>&nbsp;</div></div>\n'
+                               +'        <div class=time id="Duration"><div>&nbsp;</div></div>\n'
+                               +'</div> \n';
+                    }); 
+                    $("div.extlist").html('');
+                    $("div.extlist").html(content);
+                    ChannelsQuery()
+                    StatusQuery();
+                    content='';
+                    obj=null;
+                });
+        };   
+        //AJAX фильтрация кнопок на панели
+        function lookup(needle)
+        {
+            if(needle.length >=1)
+                listExten(needle,sorting);
+            if(needle.length ==0)
+                listExten('',sorting);
+        };
+        //выбор номера экстеншена в глобальную переменную: навешиваем обработчик на каждую кнопку экстена
+        function ExtenSelect()
+        {
+            //покажем выбор экстеншенов 
+            Show_extensions('','num');
+
+            tmp=setTimeout("Hide_extensions();", 10000);
+            $("div.ext_buttons").click(function(){
+                    alert('ddd');
+                selnum=this.children[1].innerHTML;
+                selname=this.children[3].innerHTML;
+                listExten(selname,sorting);
+                $('#ExtenSelect').html(selnum+":"+selname);
+                
+            });
+        };
+
+</script> 
+<div class="elems">
+    Phone:<span class="Button" onclick="ExtenSelect()" id="ExtenSelect">Select</span>
+    Login:<input size="10" id="login" type="text"   />
+    Pincode:<input size="10" id="password" type="text"   />
+    <input type="submit" value="Login" onclick="login()">
+</div>
+<div class="elems extlistfull">
+    <span class="button" onclick="listExten('','num')">  Order by num </span>
+    <span class="button" onclick="listExten('','name')">  Order by name </span>
+    <input size="30" id="inputString" type="text" onkeyup="lookup(this.value);"  autocomplete="off"  />
+<div class="extlist"></div>
+</div>
+</BODY>

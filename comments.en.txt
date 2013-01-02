@@ -1,0 +1,35 @@
+Ajax Status Panel for Asterisk
+Licensed under GPL v2
+(с) Lynks.Ltd 2010
+
+(translated by google translate)
+
+Comments to the source code
+
+The idea: get a web panel to view the status of subscribers and trunks instead tormonoy FOP supports
+configuration files of the latter.
+
+The program accepts configs FOP, but takes only the data of the buttons and their belonging to the applications
+trunks or users. The position of the buttons on the screen depends only on the types of images by name
+or numbers. It is also not perceived color areas and sign for them.
+
+It is understood that as part of the system is not possible to match the channel numbers, even for different
+technology. For example, if there is SIP/100, then there should not be, for example, ZAP/100. This is primarily due
+only in order to simplify the analysis of real interconnect without local channels. It happens
+that the call to the number SIP/100 going through the channel LOCAL/100 @ from-internal, which in reality
+connected to SIP/100. This imposes some restrictions that are easily bypassed. So for example,
+ three-digit channel numbers will ZAP with a large number of channels, such as the four
+E1 trunks, which by itself is designed for a large company, and for a three-valued company
+numbering cramped. On the other hand, this approach allows you to monitor in general, any connection to the
+any, even the virtual extensions.
+
+The panel does not track the number of simultaneous channels to any extensions, and will be shown
+the last in the generated list, which is equivalent to the random.
+
+The panel has the search and sorting. Only be sorted in ascending numbers or
+names. The search string can search by number and name at the same time and has two
+modes: full-text, which sought to match anywhere, and search with strict
+beginning of the line, which you need to input the search to add a space.
+
+The long experience of the panel in google chrome memory leak. The solution is simple:
+periodically (every hour) to reload the page.

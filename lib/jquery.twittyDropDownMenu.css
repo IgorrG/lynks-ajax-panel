@@ -1,0 +1,204 @@
+
+ul.twittyMenu
+{
+	display: none;
+	position: absolute;
+	padding: 3px 0;
+	margin: 0;
+	list-style: none;
+	border: 1px solid #666666;
+	background: white;
+	font: 11px/14px "Lucida Grande", sans-serif;
+}
+
+ul.twittyMenu.open
+{
+	display: inline-block;
+}
+
+ul.twittyMenu li
+{
+	line-height: 15px;
+}
+
+ul.twittyMenu li a
+{
+	display: block;
+	text-decoration: none;
+	color: #666666;
+	padding: 3px 7px;
+}
+
+ul.twittyMenu li a:hover,
+ul.twittyMenu li a:active
+{
+	background: #666666;
+	color: white;
+}
+
+button.twittyButton
+{
+	border: 1px solid #DDDDDD;
+	border-color: #DDDDDD #DDDDDD #CCCCCC #DDDDDD;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	background: #DDDDDD url(../images/bg.gif) repeat-x 0 0;
+	color: #333333;
+	height: 20px;
+	cursor: pointer;
+	font: 11px/14px "Lucida Grande", sans-serif;
+	overflow: visible;
+	text-shadow: 1px 1px 0 #FFFFFF;
+	padding: 2px 8px 2px;
+	margin: 0;
+	width: auto;
+}
+
+button.twittyButton::-moz-focus-inner
+{
+	border: 0 none;
+	padding: 0;
+}
+
+button.twittyButton:focus
+{
+	outline: medium none;
+}
+
+button.twittyButton i
+{
+	float: right;
+	width: 7px;
+	height: 4px;
+	margin: 5px 0 0 4px;
+	background: url(../images/drop.gif) no-repeat 0 0;
+}
+
+* html button.twittyButton
+{
+	position: relative;
+	padding-right: 18px;
+}
+
+* html button.twittyButton i
+{
+	position: absolute;
+	right: 6px;
+	top: 5px;
+}
+
+button.twittyButton:hover,
+button.twittyButton:focus
+{
+	background-position: 0 -6px;
+	border-color: #999999 #999999 #888888;
+	color: #000000;
+}
+
+button.twittyButton:active
+{
+	background-image: none;
+	outline: medium none;
+	text-shadow: none;
+}
+
+button.twittyButton.clicked
+{
+	background-image: none;
+	outline: medium none;
+	text-shadow: none;
+	border-color: #999999 #999999 #888888;
+}
+button.twittyButton.noshow
+{
+        display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+.LrButton
+{
+	border: 1px solid #DDDDDD;
+	border-color: #DDDDDD #DDDDDD #CCCCCC #DDDDDD;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	background: #DDDDDD url(../images/bg.gif) repeat-x 0 0;
+	color: #333333;
+	cursor: pointer;
+	font: 11px/14px "Lucida Grande", sans-serif;
+	overflow: visible;
+	text-shadow: 1px 1px 0 #FFFFFF;
+	padding: 2px 8px 2px;
+	margin: 0;
+	width: auto;
+        display: inline-block;
+}
+
+.LrButton::-moz-focus-inner
+{
+	border: 0 none;
+	padding: 0;
+}
+
+.LrButton:focus
+{
+	outline: medium none;
+}
+
+.LrButton i
+{
+	float: right;
+	width: 7px;
+	height: 4px;
+	margin: 5px 0 0 4px;
+	background: url(../images/drop.gif) no-repeat 0 0;
+}
+
+* html .LrButton
+{
+	position: relative;
+	padding-right: 18px;
+}
+
+* html .LrButton i
+{
+	position: absolute;
+	right: 6px;
+	top: 5px;
+}
+
+.LrButton:hover,
+.LrButton:focus
+{
+	background-position: 0 -6px;
+	border-color: #999999 #999999 #888888;
+	color: #000000;
+}
+
+.LrButton:active
+{
+	background-image: none;
+	outline: medium none;
+	text-shadow: none;
+}
+
+.LrButton.clicked
+{
+	background-image: none;
+	outline: medium none;
+	text-shadow: none;
+	border-color: #999999 #999999 #888888;
+}
+.LrButton.disabled
+{
+        color: #ffffff;
+	text-shadow: -1px -1px 0 #AAAAAA;
+}
