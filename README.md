@@ -1,4 +1,4 @@
-Replacemant for FOP panel
+Replacement for FOP panel
 =========================
 
 Get lower system load and better perfomance!
